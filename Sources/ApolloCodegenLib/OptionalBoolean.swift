@@ -11,3 +11,18 @@ extension Optional where Wrapped == Bool {
     }
   }
 }
+
+extension Optional {
+  enum UnwrapError: Error {
+    case unexpectedNil
+  }
+  
+  func apollo_unwrap() throws -> Wrapped {
+    switch self {
+    case .none:
+      throw UnwrapError.unexpectedNil
+    case .some(let wrapped):
+      return wrapped
+    }
+  }
+}

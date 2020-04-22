@@ -25,7 +25,7 @@ class EnumGenerationTests: XCTestCase {
                                 values: nil,
                                 fields: [
                                   ASTTypeUsed.Field(name: "test",
-                                                    type: "String!",
+                                                    type: .nonNullNamed("String"),
                                                     description: nil)
                                 ])
     

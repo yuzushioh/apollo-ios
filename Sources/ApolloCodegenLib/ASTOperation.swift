@@ -16,7 +16,7 @@ struct ASTOperation: Codable, Equatable {
     let name: String
     
     /// The type of the variable
-    let type: ASTVariableType
+    let typeNode: ASTVariableType
   }
 
   /// The full file path to the file where this operation was defined on the filesystem where the AST was generated.
@@ -38,19 +38,7 @@ struct ASTOperation: Codable, Equatable {
   let source: String
   
   /// The immediate fields returned with this operation.
-  let fields: [ASTField]
-  
-  /// Names of fragments referenced at this level.
-  let fragmentSpreads: [String]
-  
-  /// Fragments defined inline at this level
-  let inlineFragments: [ASTInlineFragment]
-  
-  /// Names of any fragments referenced wtihin this operation at any level
-  let fragmentsReferenced: [String]
-  
-  /// The full source with all fragments appended.
-  let sourceWithFragments: String
+  let selectionSet: ASTSelectionSet
   
   /// [optional] The calculated ID for the operation. Will only be generated if `operationIDsURL` is passed into `ApolloCodegenOptions`.`
   let operationId: String?
