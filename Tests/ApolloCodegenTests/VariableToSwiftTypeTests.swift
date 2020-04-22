@@ -14,7 +14,7 @@ class VariableToSwiftTypeTests: XCTestCase {
   func testNullableNameType() throws {
     let json: [String: Any?] = [
       "kind": "NamedType",
-      "type": [
+      "name": [
         "kind": "Name",
         "value": "Episode",
       ]
@@ -24,7 +24,7 @@ class VariableToSwiftTypeTests: XCTestCase {
     XCTAssertEqual(variable.kind, .NamedType)
     XCTAssertNil(variable.value)
     
-    let innerType = try XCTUnwrap(variable.type)
+    let innerType = try XCTUnwrap(variable.name)
     XCTAssertEqual(innerType.kind, .Name)
     XCTAssertEqual(innerType.value, "Episode")
     XCTAssertNil(innerType.type)
@@ -37,7 +37,7 @@ class VariableToSwiftTypeTests: XCTestCase {
       "kind": "NonNullType",
       "type": [
         "kind": "NamedType",
-        "type": [
+        "name": [
           "kind": "Name",
           "value": "Episode",
         ]
@@ -52,7 +52,7 @@ class VariableToSwiftTypeTests: XCTestCase {
     XCTAssertEqual(ofOuterType.kind, .NamedType)
     XCTAssertNil(ofOuterType.value)
     
-    let ofInnerType = try XCTUnwrap(ofOuterType.type)
+    let ofInnerType = try XCTUnwrap(ofOuterType.name)
     XCTAssertEqual(ofInnerType.kind, .Name)
     XCTAssertEqual(ofInnerType.value, "Episode")
     XCTAssertNil(ofInnerType.type)
@@ -65,7 +65,7 @@ class VariableToSwiftTypeTests: XCTestCase {
       "kind": "ListType",
       "type": [
         "kind": "NamedType",
-        "type": [
+        "name": [
           "kind": "Name",
           "value": "Character",
         ]
@@ -80,7 +80,7 @@ class VariableToSwiftTypeTests: XCTestCase {
     XCTAssertEqual(outerType.kind, .NamedType)
     XCTAssertNil(outerType.value)
     
-    let innerType = try XCTUnwrap(outerType.type)
+    let innerType = try XCTUnwrap(outerType.name)
     XCTAssertEqual(innerType.value, "Character")
     XCTAssertNil(innerType.type)
 
@@ -94,7 +94,7 @@ class VariableToSwiftTypeTests: XCTestCase {
         "kind": "NonNullType",
         "type": [
           "kind": "NamedType",
-          "type": [
+          "name": [
             "kind": "Name",
             "value": "Character",
           ]
@@ -114,7 +114,7 @@ class VariableToSwiftTypeTests: XCTestCase {
     XCTAssertEqual(ofSecondType.kind, .NamedType)
     XCTAssertNil(ofSecondType.value)
     
-    let ofThirdType = try XCTUnwrap(ofSecondType.type)
+    let ofThirdType = try XCTUnwrap(ofSecondType.name)
     XCTAssertEqual(ofThirdType.kind, .Name)
     XCTAssertEqual(ofThirdType.value, "Character")
     XCTAssertNil(ofThirdType.type)
@@ -129,7 +129,7 @@ class VariableToSwiftTypeTests: XCTestCase {
         "kind": "ListType",
         "type": [
           "kind": "NamedType",
-          "type": [
+          "name": [
             "kind": "Name",
             "value": "Character",
           ]
@@ -149,7 +149,7 @@ class VariableToSwiftTypeTests: XCTestCase {
     XCTAssertEqual(ofSecondType.kind, .NamedType)
     XCTAssertNil(ofSecondType.value)
     
-    let ofThirdType = try XCTUnwrap(ofSecondType.type)
+    let ofThirdType = try XCTUnwrap(ofSecondType.name)
     XCTAssertEqual(ofThirdType.kind, .Name)
     XCTAssertEqual(ofThirdType.value, "Character")
     XCTAssertNil(ofThirdType.type)
@@ -166,7 +166,7 @@ class VariableToSwiftTypeTests: XCTestCase {
           "kind": "NonNullType",
           "type": [
             "kind": "NamedType",
-            "type": [
+            "name": [
               "kind": "Name",
               "value": "Character",
             ]
@@ -191,7 +191,8 @@ class VariableToSwiftTypeTests: XCTestCase {
     XCTAssertEqual(ofThirdType.kind, .NamedType)
     XCTAssertNil(ofThirdType.value)
     
-    let ofFourthType = try XCTUnwrap(ofThirdType.type)
+    let ofFourthType = try XCTUnwrap(ofThirdType.name)
+    XCTAssertEqual(ofFourthType.kind, .Name)
     XCTAssertEqual(ofFourthType.value, "Character")
     XCTAssertNil(ofFourthType.type)
     

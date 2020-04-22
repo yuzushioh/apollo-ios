@@ -20,13 +20,13 @@ class InputObjectGenerationTests: XCTestCase {
   
   private func colorInput(named name: String) -> ASTTypeUsed {
     let red = ASTTypeUsed.Field(name: "red",
-                                type: .nonNullNamed("Int"),
+                                type: .swiftNonNullNamed("Int"),
                                 description: nil)
     let green = ASTTypeUsed.Field(name: "green",
-                                  type: .nonNullNamed("Int"),
+                                  type: .swiftNonNullNamed("Int"),
                                   description: nil)
     let blue = ASTTypeUsed.Field(name: "blue",
-                                 type: .nonNullNamed("Int"),
+                                 type: .swiftNonNullNamed("Int"),
                                  description: nil)
     
     let colorInput = ASTTypeUsed(kind: .InputObjectType,

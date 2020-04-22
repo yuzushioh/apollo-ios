@@ -19,6 +19,14 @@ extension String {
   static func nonNullNamed(_ name: String) -> String {
     return "\(name)!"
   }
+  
+  static func swiftNamed(_ name: String) -> String {
+    return "\(name)?"
+  }
+  
+  static func swiftNonNullNamed(_ name: String) -> String {
+    return name
+  }
 }
 
 extension ASTVariableType {
