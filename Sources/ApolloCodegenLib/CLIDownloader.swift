@@ -72,45 +72,48 @@ struct CLIDownloader {
     CodegenLogger.log("Downloading zip file with the CLI...")
     let semaphore = DispatchSemaphore(value: 0)
     var errorToThrow: Error? = CLIDownloaderError.downloadTimedOut(after: timeout)
-    URLSession.shared.dataTask(with: URL(string: CLIDownloader.downloadURLString)!) { data, response, error in
-      defer {
+    
+    URLSession.shared.dataTask(with: URL(string: CLIDownloader.downloadURLString)!) { data, response, error in      
+      func setErrorToThrow(_ error: Error?) {
+        errorToThrow = error
         semaphore.signal()
       }
+      
       if let error = error {
-        errorToThrow = error
+        setErrorToThrow(error)
         return
       }
       
       guard let httpResponse = response as? HTTPURLResponse else {
-        errorToThrow = CLIDownloaderError.responseNotHTTPResponse
+        setErrorToThrow(CLIDownloaderError.responseNotHTTPResponse)
         return
       }
       
       guard httpResponse.statusCode == 200 else {
         let dataAsString = String(bytes: data ?? Data(), encoding: .utf8)
-        errorToThrow = CLIDownloaderError.badResponse(code: httpResponse.statusCode, response: dataAsString)
+        setErrorToThrow(CLIDownloaderError.badResponse(code: httpResponse.statusCode, response: dataAsString))
         return
       }
       
       guard let data = data else {
-        errorToThrow = CLIDownloaderError.noDataReceived
+        setErrorToThrow(CLIDownloaderError.noDataReceived)
         return
       }
       
       guard !data.isEmpty else {
-        errorToThrow = CLIDownloaderError.emptyDataReceived
+        setErrorToThrow(CLIDownloaderError.emptyDataReceived)
         return
       }
       
       do {
         try data.write(to: zipFileURL)
       } catch {
-        errorToThrow = error
+        setErrorToThrow(error)
         return
       }
       
       // If we got here, it all worked and it's good to go!
-      errorToThrow = nil
+      setErrorToThrow(nil)
     }.resume()
     
     _ = semaphore.wait(timeout: .now() + timeout)
