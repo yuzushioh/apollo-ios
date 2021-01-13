@@ -28,6 +28,10 @@ let package = Package(
     .library(
         name: "ApolloSQLite",
         targets: ["ApolloSQLite"]),
+      .library(
+          name: "ApolloSQLite-Dynamic",
+          type: .dynamic,
+          targets: ["ApolloSQLite"]),
     .library(
         name: "ApolloWebSocket",
         targets: ["ApolloWebSocket"]),
